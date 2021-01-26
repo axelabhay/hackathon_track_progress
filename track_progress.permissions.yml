@@ -1,0 +1,4 @@
+administer track progress:
+  title: 'Administer Track Progress'
+  description: 'Promote, change ownership and perform other tasks across all trackings.'
+  restrict access: true

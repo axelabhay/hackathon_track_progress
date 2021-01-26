@@ -1,0 +1,234 @@
+# ADMIN SETTINGS
+track_progress.settings:
+  path: '/admin/config/track_progress/settings'
+  defaults:
+    _form: '\Drupal\track_progress\Form\TrackProgressSettingsForm'
+    _title: 'Track progress- Settings'
+  requirements:
+    _permission: 'administer track progress'
+  options:
+    _admin_route: TRUE
+
+# @todo make aid %activity to get loaded activity.
+track_progress.activity_interact:
+  path: '/track-progress/activity/{activity}'
+  defaults:
+    _form: '\Drupal\track_progress\Form\TrackProgressInteractFormIndividual'
+    _title_callback: '\Drupal\track_progress\Form\TrackProgressInteractFormIndividual::title'
+  requirements:
+    _permission: 'administer track progress'
+  options:
+    parameters:
+      # The parameter label. Corresponds to the string
+      # used in "path" above.
+      activity:
+        # The type name of the parameter.
+        # This value is passed as-is to your applies() method,
+        # in $definition['type']. @todo correct nomen.
+        type: 'tp-upcast'
+    # admin jaisa page dikhta h @todo remove below
+    #_admin_route: TRUE
+
+# CATEGORY
+# NEW CATEGORY
+track_progress.category_overview:
+  path: '/track-progress/category/overview'
+  defaults:
+    _form: '\Drupal\track_progress\Form\TrackProgressCategoryOverviewForm'
+    _title: 'Category (Track Progress)'
+  requirements:
+    _permission: 'administer track progress'
+  options:
+    _admin_route: TRUE
+
+track_progress.category_add:
+  path: '/track-progress/category/add'
+  defaults:
+    _form: '\Drupal\track_progress\Form\TrackProgressCategoryAddForm'
+    _title: 'Add Category (Track Progress)'
+  requirements:
+    _permission: 'administer track progress'
+  options:
+    _admin_route: TRUE
+
+track_progress.category_edit:
+  path: '/track-progress/category/manage/{category}/edit'
+  defaults:
+    _form: '\Drupal\track_progress\Form\TrackProgressCategoryEditForm'
+    _title: 'Edit Category (Track Progress)'
+  requirements:
+    _permission: 'administer track progress'
+    category: \d+
+  options:
+    _admin_route: TRUE
+    parameters:
+      # The parameter label. Corresponds to the string
+      # used in "path" above.
+      category:
+        # The type name of the parameter.
+        # This value is passed as-is to your applies() method,
+        # in $definition['type']. @todo correct nomen.
+        type: 'tp-upcast'
+
+track_progress.category_delete:
+  path: '/track-progress/category/manage/{category}/delete'
+  defaults:
+    _form: '\Drupal\track_progress\Form\TrackProgressCategoryDeleteForm'
+    _title_callback: '\Drupal\track_progress\Form\TrackProgressCategoryDeleteForm::title'
+  requirements:
+    _permission: 'administer track progress'
+    category: \d+
+  options:
+    _admin_route: TRUE
+    parameters:
+      # The parameter label. Corresponds to the string
+      # used in "path" above.
+      # @todo force to be integer.
+      category:
+        # The type name of the parameter.
+        # This value is passed as-is to your applies() method,
+        # in $definition['type']. @todo correct nomen.
+        type: 'tp-upcast'
+
+track_progress.bulk_delete:
+  path: '/track-progress/bulk/{type}/delete'
+  defaults:
+    _form: '\Drupal\track_progress\Form\TrackProgressBulkDeleteForm'
+    _title: 'Bulk Delete (Track Progress)'
+  requirements:
+    _permission: 'administer track progress'
+  options:
+    _admin_route: TRUE
+
+track_progress.reset_weight:
+  path: '/track-progress/reset/{type}/weight'
+  defaults:
+    _form: '\Drupal\track_progress\Form\TrackProgressResetWeightForm'
+    _title: 'Reset Weight (Track Progress)'
+  requirements:
+    _permission: 'administer track progress'
+  options:
+    _admin_route: TRUE
+
+
+# ACTIVITY
+# NEW ACTIVITY
+track_progress.activity_add:
+  path: '/track-progress/activity/add'
+  defaults:
+    _form: '\Drupal\track_progress\Form\TrackProgressActivityAddForm'
+    _title: 'Add Activity (Track Progress)'
+  requirements:
+    _permission: 'administer track progress'
+  options:
+    _admin_route: TRUE
+
+track_progress.activity_edit:
+  path: '/track-progress/activity/manage/{activity}/edit'
+  defaults:
+    _form: '\Drupal\track_progress\Form\TrackProgressActivityEditForm'
+    _title: 'Edit Activity (Track Progress)'
+  requirements:
+    _permission: 'administer track progress'
+    activity: \d+
+  options:
+    _admin_route: TRUE
+    parameters:
+      # The parameter label. Corresponds to the string
+      # used in "path" above.
+      activity:
+        # The type name of the parameter.
+        # This value is passed as-is to your applies() method,
+        # in $definition['type']. @todo correct nomen.
+        type: 'tp-upcast'
+
+track_progress.activity_delete:
+  path: '/track-progress/activity/manage/{activity}/delete'
+  defaults:
+    _form: '\Drupal\track_progress\Form\TrackProgressActivityDeleteForm'
+    _title_callback: '\Drupal\track_progress\Form\TrackProgressActivityDeleteForm::title'
+  requirements:
+    _permission: 'administer track progress'
+    activity: \d+
+  options:
+    _admin_route: TRUE
+    parameters:
+      # The parameter label. Corresponds to the string
+      # used in "path" above.
+      # @todo force to be integer.
+      activity:
+        # The type name of the parameter.
+        # This value is passed as-is to your applies() method,
+        # in $definition['type']. @todo correct nomen.
+        type: 'tp-upcast'
+
+
+# TASK
+# NEW TASK
+track_progress.task_add:
+  path: '/track-progress/activity/manage/{activity}/tasks/add'
+  defaults:
+    _form: '\Drupal\track_progress\Form\TrackProgressTaskAddForm'
+    _title: 'Add Task (Track Progress)'
+  requirements:
+    _permission: 'administer track progress'
+    activity: \d+
+  options:
+    _admin_route: TRUE
+    parameters:
+      # The parameter label. Corresponds to the string
+      # used in "path" above.
+      activity:
+        # The type name of the parameter.
+        # This value is passed as-is to your applies() method,
+        # in $definition['type']. @todo correct nomen.
+        type: 'tp-upcast'
+
+track_progress.task_edit:
+  path: '/track-progress/activity/manage/{activity}/tasks/manage/{task}/edit'
+  defaults:
+    _form: '\Drupal\track_progress\Form\TrackProgressTaskEditForm'
+    _title: 'Edit Task (Track Progress)'
+  requirements:
+    _permission: 'administer track progress'
+    task: \d+
+  options:
+    _admin_route: TRUE
+    parameters:
+      # The parameter label. Corresponds to the string
+      # used in "path" above.
+      activity:
+        type: 'tp-upcast'
+      task:
+        # The type name of the parameter.
+        # This value is passed as-is to your applies() method,
+        # in $definition['type']. @todo correct nomen.
+        type: 'tp-upcast'
+
+track_progress.task_delete:
+  path: '/track-progress/activity/manage/{activity}/tasks/manage/{task}/delete'
+  defaults:
+    _form: '\Drupal\track_progress\Form\TrackProgressTaskDeleteForm'
+    _title_callback: '\Drupal\track_progress\Form\TrackProgressTaskDeleteForm::title'
+  requirements:
+    _permission: 'administer track progress'
+    task: \d+
+  options:
+    _admin_route: TRUE
+    parameters:
+      # The parameter label. Corresponds to the string
+      # used in "path" above.
+      # @todo force to be integer.
+      activity:
+        type: 'tp-upcast'
+      task:
+        # The type name of the parameter.
+        # This value is passed as-is to your applies() method,
+        # in $definition['type']. @todo correct nomen.
+        type: 'tp-upcast'
+
+# Routing issue - Home  Administration  Configuration  Track progress- Manage Activity Tasks  Track progress- Manage Activity Tasks  Track progress- Manage Activity Tasks
+# Introduce dynamic routing as done in module @todo.
+# @todo Change max routing from /admin _admin_route: FALSE paths.
+# convert track_progress to track-progress
+# make overview page as admin theme _admin_route: TRUE

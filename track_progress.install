@@ -1,0 +1,230 @@
+<?php
+
+/**
+ * @file
+ * @todo clean up Image Annotator.
+ */
+
+
+/**
+ * Implements hook_install().
+ */
+function track_progress_install() {
+  // Set default settings.
+  \Drupal::configFactory()
+    ->getEditable('track_progress.settings')
+    ->set('category_default_color', '#1E90FF')
+    ->set('activity_progress_theme', 'track_progress_interact')
+    ->save();
+}
+
+/**
+ * Implements hook_schema().
+ */
+function track_progress_schema() {
+  // Category.
+  $schema['track_progress_category'] = [
+    'description' => 'Maintains Category.',
+    'fields' => [
+      'cid' => [
+        'description' => 'Category ID.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'title' => [
+        'description' => 'Category title.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'color' => [
+        'description' => 'Category color hexcode.',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+      ],
+      'user' => [
+        'description' => 'User added the category.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'weight' => [
+        'description' => 'Wieght to order category.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['cid'],
+  ];
+
+  // Activity.
+  $schema['track_progress_activity'] = [
+    'description' => 'Maintains activity.',
+    'fields' => [
+      'aid' => [
+        'description' => 'Activity ID.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'title' => [
+        'description' => 'Activity title.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      // @todo check blob size.
+      'description' => [
+        'description' => 'Activity description.',
+        'type' => 'text',
+        'size' => 'normal',
+      ],
+      'user' => [
+        'description' => 'User added the task.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'assignee' => [
+        'description' => 'The user this activity is assigned to.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        // @todo not null, if applicable
+        // 'not null' => TRUE,
+      ],
+      'active' => [
+        'description' => 'A boolean indicating active status.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'archive_on' => [
+        'description' => 'Freeze on.',
+        'type' => 'int',
+        'default' => 0,
+      ],
+      'promoted' => [
+        'description' => 'A boolean indicating activity promoted.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'weighted_progress' => [
+        'description' => 'A boolean indicating if weighted task progress opted.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'partial_progress' => [
+        'description' => 'A boolean indicating if partial task progress opted.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'created' => [
+        'description' => 'Created timestamp.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'updated' => [
+        'description' => 'Updated timestamp.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'weight' => [
+        'description' => 'Wieght to order activity.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['aid'],
+  ];
+
+  // Task.
+  $schema['track_progress_task'] = [
+    'description' => 'Maintains activity tasks.',
+    'fields' => [
+      'tid' => [
+        'description' => 'Task ID.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'title' => [
+        'description' => 'Category title.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'description' => [
+        'description' => 'Task description.',
+        'type' => 'text',
+        'size' => 'normal',
+      ],
+      'activity' => [
+        'description' => 'Activity ID.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'category' => [
+        'description' => 'Category ID.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+      ],
+      'user' => [
+        'description' => 'User added the task.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'progress' => [
+        'description' => 'Progress percentage.',
+        'type' => 'varchar',
+        'length' => 32,
+      ],
+      'weightage' => [
+        'description' => 'Progress weightage.',
+        'type' => 'varchar',
+        'length' => 32,
+      ],
+      'created' => [
+        'description' => 'Created timestamp.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      // @todo add default value __REQUEST_TIME__
+      'updated' => [
+        'description' => 'Updated timestamp.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'weight' => [
+        'description' => 'Wieght to order task.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['tid'],
+  ];
+
+  return $schema;
+}
+
+

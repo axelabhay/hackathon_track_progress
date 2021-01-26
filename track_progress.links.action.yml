@@ -1,0 +1,26 @@
+# @todo all +add new buttons.
+track_progress.category_add:
+  route_name: track_progress.category_add
+  title: 'Add Category'
+  # Just to add destination parameters.
+  class: \Drupal\menu_ui\Plugin\Menu\LocalAction\MenuLinkAdd
+  appears_on:
+    - track_progress.category_overview
+
+track_progress.activity_add:
+  route_name: track_progress.activity_add
+  title: 'Add Activity'
+  # Just to add destination parameters.
+  class: \Drupal\menu_ui\Plugin\Menu\LocalAction\MenuLinkAdd
+  appears_on:
+    - view.track_progress.activity
+
+track_progress.task_add:
+  route_name: track_progress.task_add
+  class: \Drupal\track_progress\Plugin\Menu\LocalAction\TrackProgressLocalAction1
+  title: 'Add Task'
+  appears_on:
+    - view.track_progress.task
+  route_parameters:
+    # @todo anyname u can give here. could be deleted i guess.
+    activity: '@activity----------->'

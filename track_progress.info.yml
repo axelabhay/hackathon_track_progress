@@ -1,0 +1,10 @@
+name: Track Progress
+description: Track your activity or task progress.
+package: Other
+
+type: module
+core: 8.x
+core_version_requirement: ^8 || ^9
+
+# @todo below
+configure: track_progress.settings

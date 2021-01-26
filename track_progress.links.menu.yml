@@ -1,0 +1,5 @@
+track_progress.settings:
+  title: 'Track Progress'
+  description: 'Track Progress settings and configurations.'
+  parent: system.admin_config_media
+  route_name: view.track_progress.activity

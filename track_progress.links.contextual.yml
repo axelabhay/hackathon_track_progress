@@ -1,0 +1,18 @@
+# @todo nomenclature.
+track_progress.activity_contextual.tasks:
+  title: Manage tasks
+  group: track_progress_activity
+  route_name: view.track_progress.task
+  weight: 1
+
+track_progress.activity_contextual.activity_edit:
+  title: Edit
+  group: track_progress_activity
+  route_name: track_progress.activity_edit
+  weight: 2
+
+track_progress.activity_contextual.activity_delete:
+  title: Delete
+  group: track_progress_activity
+  route_name: track_progress.activity_delete
+  weight: 3

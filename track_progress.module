@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * @file
+ * Contains hook implementations for the track_progress module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Register track progress twig file.
+ *
+ * Implements hook_theme().
+ */
+function track_progress_theme() {
+  return [
+    'track_progress_interact' => [
+      'render element' => 'form',
+    ],
+    'track_progress_interact__circular' => [
+      'render element' => 'form',
+    ],
+  ];
+}
+
+
+/**
+ * Implements hook_preprocess_views_view_table().
+ */
+function track_progress_preprocess_views_view_table(&$variables) {
+  $view = $variables['view'];
+  // @todo check if not troubling while creating other views.
+
+  // Ignore tables other than track-progress.
+  $base_tables = $view->getBaseTables();
+  if (!isset($base_tables['track_progress_activity'])) {
+    return;
+  }
+
+  // @todo include if necessary.
+  $variables['#attached']['library'][] = 'track_progress/style';
+  $variables['#attached']['library'][] = 'track_progress/script';
+
+  // Further, ignore views without table-drag field.
+  if (!isset($view->field['tabledrag'])) {
+    return;
+  }
+
+  // Add table id to make it effective.
+  // @see Drupal\track_progress\Plugin\views\field\WeightTableDrag.
+  $variables['attributes']['id'] = 'track-progress-table-' . $view->id() . '-' . $view->current_display;
+
+  // Make rows draggable.
+  foreach ($variables['rows'] as &$row) {
+    $row['attributes']->addClass('draggable');
+  }
+  unset($row);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter()
+ *
+ * Restricting few custom view-fields to appear once while adding from views-ui.
+ */
+function track_progress_form_views_ui_add_handler_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $view = $form_state->get('view');
+  // @todo check if not troubling while creating other views.
+
+  // Ignore views-ui form than track-progress views.
+  if ($view->get('base_table') !== 'track_progress_activity') {
+    return;
+  }
+
+  $one_time_fields = [
+    'bulkaction' => 'bulkaction',
+    'tabledrag' => 'tabledrag',
+  ];
+
+  $displays = $view->get('display');
+  $display_id = $form_state->get('display_id');
+
+  // If current view-display fields are not overridden, collect default-display fields.
+  $fields = isset($displays[$display_id]['display_options']['fields'])
+    ? $displays[$display_id]['display_options']['fields']
+    : $displays['default']['display_options']['fields'];
+
+  // Unset/restric $field_appear_once field if already exists.
+  foreach ($fields as $field) {
+    if ($field['table'] == 'track_progress_activity' && in_array($field['field'], $one_time_fields)) {
+      unset($form["options"]["name"]["#options"]["track_progress_activity." . $field['field']]);
+      unset($one_time_fields[$field['field']]);
+    }
+  }
+}

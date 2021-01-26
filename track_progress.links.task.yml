@@ -1,0 +1,34 @@
+
+track_progress.view:
+  title: 'View'
+  route_name: track_progress.view
+  base_route: track_progress.view
+  weight: 1
+
+track_progress.tab.activity_overview:
+  title: 'Activities'
+  route_name: view.track_progress.activity
+  base_route: view.track_progress.activity
+  weight: 1
+track_progress.subtab.activity_active:
+  title: 'Active'
+  route_name: view.track_progress.activity
+  parent_id: track_progress.tab.activity_overview
+  weight: 1
+track_progress.subtab.activity_archived:
+  title: 'Archived'
+  route_name: view.track_progress.archived
+  parent_id: track_progress.tab.activity_overview
+  weight: 2
+
+track_progress.tab.category_overview:
+  title: 'Manage Category'
+  route_name: track_progress.category_overview
+  base_route: view.track_progress.activity
+  weight: 2
+
+track_progress.tab.settings:
+  title: 'Settings'
+  route_name: track_progress.settings
+  base_route: view.track_progress.activity
+  weight: 3

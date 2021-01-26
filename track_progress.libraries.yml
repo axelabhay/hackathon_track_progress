@@ -1,0 +1,36 @@
+style:
+  version: VERSION
+  css:
+    theme:
+      css/track_progress.css: {}
+script:
+  version: VERSION
+  js:
+    js/track_progress.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/jquery.once
+component_form:
+  version: VERSION
+  js:
+    js/component_form.js: {}
+  # May be not required @todo.
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/jquery.once
+
+refresh_progress:
+  version: VERSION
+  css:
+    theme:
+      css/refresh_progress.css: {}
+  js:
+    js/refresh_progress.js: {}
+  # May be not required @todo.
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/jquery.once
+# @todo create a separate library for overview tables min version.

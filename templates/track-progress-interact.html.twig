@@ -1,0 +1,100 @@
+{#
+/**
+ * @file
+ * Default theme implementation for config trackme form.
+ * Available variables:
+ */
+#}
+
+{#
+@todo:
+- Update variables
+- Remove all inline styles
+- Remove all <br>
+- Make all labels traslatable
+- http://jsfiddle.net/ya3ya6/yd3rzo42/
+-
+
+Multiple Progress Bars https://www.w3schools.com/bootstrap4/bootstrap_progressbars.asp
+Circular- https://codepen.io/cliffpyles/pen/xbsiC
+Progress with/without category
+Add a countdown 34days left.
+
+CIRCULAR progress
+img {
+  position: absolute;
+  clip: rect(0px,60px,200px,0px);
+  transform: rotate(108deg);
+}
+https://codepen.io/jo-asakura/pen/stFHi
+<img src="w3css.gif" width="100" height="140">
+
+- .container {
+  background: #2f2ff2;
+  padding: 15px;
+}
+
+.container p {
+color: #fff;
+  mix-blend-mode: difference;
+}
+
+#}
+
+{{ form.form_build_id }}
+{{ form.form_token }}
+{{ form.form_id }}
+
+{{ attach_library('track_progress/refresh_progress') }}
+
+<div class="track-progress-interact track-progress {{ form.activity['#value'] }}">
+  {{ title_suffix }}
+  <div class='activity-wrapper'>
+    <div class='activity-1'>
+      <div>
+        <div>
+          <div>
+            <span class="progess-info-percent"></span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="category-progress-wrapper">
+        {% for key, item in form.category_list['#value'] %}
+          <div data-tooltip class="category-progress-wrapper-child category-progress-{{ key }}"></div>
+        {% endfor %}
+      </div>
+
+      <div>
+        <span class="progess-info-details"></span>
+        {% if form.check_reamaining_time['#value'] %}
+          <div>
+            <span class="">{{ form.check_reamaining_time['#value'] }} remaining</span>
+          </div>
+        {% endif %}
+        <span class="hint-activity-weighted">{{ form.hint_weighted['#value'] ? '&#127366;' : '!&#127366;' }}</span>
+        <span class="hint-activity-archived">{{ form.hint_active['#value'] ? '!&#9681;' : '&#9681;' }}</span>
+      </div>
+    </div>
+
+    <div class='activity-2'>
+      <div>
+        <h1 class='title page-title'>{{ form.trackme_heading }}</h1>
+        <div class='form-item__description'>{{ form.trackme_description }}</div>
+      </div>
+
+      <div class='list-items'>
+        {% for key, item in form.items %}
+          {% if item.check %}
+            <div>
+              <div>{{ item.partial_progress }}</div>
+              <div>{{ item.check }}</div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+</div>

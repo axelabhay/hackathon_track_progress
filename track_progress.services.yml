@@ -1,0 +1,16 @@
+services:
+  track_progress.data:
+    class: Drupal\track_progress\TrackProgressUtility
+    arguments: ['@database', '@config.factory', '@current_user', '@messenger', '@logger.factory', '@string_translation', '@link_generator', '@event_dispatcher']
+
+  # Specifically to add admin routes.
+  track_progress.route_subscriber:
+    class: Drupal\track_progress\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  track_progress.param_converter:
+    class: Drupal\track_progress\Routing\ParamConverter
+    arguments: ['@track_progress.data']
+    tags:
+      - { name: paramconverter }
